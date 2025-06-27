@@ -1,56 +1,58 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  postgres:
-    image: postgres:14
-    container_name: pg_login2
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin234
-      POSTGRES_DB: hrms_db
+  login:
+    build: 
+      context: ./Login
+      dockerfile: Dockerfile
     ports:
-      - "5700:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - app-network
+      - "6013:80"
+    depends_on:
+      - backend
+      - postgres
+    environment:
+      - BACKEND_URL=http://backend:3214
+
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "6014:80"
+    depends_on:
+      - backend
+      - postgres
+    environment:
+      - BACKEND_URL=http://backend:3214
 
   backend:
-    build:
+    build: 
       context: ./Backend
-    container_name: backend_service2
+      dockerfile: Dockerfile
     ports:
       - "3214:3214"
     depends_on:
       - postgres
     environment:
-      - NODE_ENV=production
-    networks:
-      - app-network
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin234
+      - POSTGRES_DB=hrms_db
 
-  login:
-    build:
-      context: ./Login
-    container_name: login_service4
+  postgres:
+    image: postgres:14
+    container_name: postgres33
     ports:
-      - "7300:80"
-    networks:
-      - app-network
-
-  dashboard:
-    build:
-      context: ./dashboard
-    container_name: dashboard_service3
-    ports:
-      - "7301:80"
-    networks:
-      - app-network
+      - "5700:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin234
+      - POSTGRES_DB=hrms_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  pgdata:
-
-networks:
-  app-network:
-    driver: bridge
+  db_data:
 

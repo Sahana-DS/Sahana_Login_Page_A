@@ -866,7 +866,7 @@ footer a:hover {
                 formData.append('profileImage', imageFile);
 
                 try {
-                    const response = await fetch('http://3.88.203.125:3300/api/register', {
+                    const response = await fetch('http://13.60.82.174:3214/api/register', {
                         method: 'POST',
                         body: formData
                     });
@@ -900,7 +900,7 @@ footer a:hover {
                 }
 
                 try {
-                    const response = await fetch('http://3.88.203.125:3300/api/login', {
+                    const response = await fetch('http://13.60.82.174:3214/api/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ username, password })
@@ -945,7 +945,7 @@ footer a:hover {
                 }
 
                 try {
-                    const response = await fetch('http://3.88.203.125:3300/api/reset-password', {
+                    const response = await fetch('http://13.60.82.174:3214/api/reset-password', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email, newPassword })
@@ -985,7 +985,7 @@ footer a:hover {
                     biometricMessage.textContent = 'Authentication successful!';
                     this.style.color = '#00ff00';
                     setTimeout(() => {
-                        window.location.href = 'http://3.88.203.125:7301/dashboard/index.html';
+                        window.location.href = 'http://13.60.82.174:7301/dashboard/index.html';
                     }, 1000);
                 }, 2000);
             });

@@ -15,7 +15,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'postgres',
     database: 'hrms_db',
-    password: 'admin123',
+    password: 'admin234',
     port: 5432,
 });
 
@@ -165,7 +165,7 @@ app.get('/api/user', authenticateToken, async (req, res) => {
         const user = result.rows[0];
         res.json({
             username: user.username,
-            profileImage: `http://3.88.203.125:3300${user.profile_image}`,
+            profileImage: `http://13.60.82.174:3214${user.profile_image}`,
         });
     } catch (error) {
         console.error('Error:', error);
@@ -177,5 +177,5 @@ app.get('/api/user', authenticateToken, async (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
 
 app.listen(3300, () => {
-    console.log('Server running on http://3.88.203.125:3300');
+    console.log('Server running on http://13.60.82.174:3214');
 });
